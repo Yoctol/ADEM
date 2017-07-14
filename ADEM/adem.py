@@ -2,6 +2,9 @@ import tensorflow as tf
 
 
 def adem_score(context, model_response, reference_response):
+    # context = tf.cast(context, tf.float32)
+    # model_response = tf.cast(model_response, tf.float32)
+    # reference_response = tf.cast(reference_response, tf.float32)
     rr_size, rr_dim = reference_response.get_shape().as_list()
     mr_size, mr_dim = model_response.get_shape().as_list()
     ct_size, ct_dim = context.get_shape().as_list()
@@ -24,14 +27,23 @@ def adem_score(context, model_response, reference_response):
 
 
 def matrix_l1_norm(matrix):
+    matrix = tf.cast(matrix, tf.float32)
     abs_matrix = tf.abs(matrix)
     row_max = tf.reduce_max(abs_matrix, axis=1)
     return tf.reduce_sum(row_max)
 
 
 def adem_l1_loss(human_score, model_score, M, N):
-    # TODO human_score.shape == model_score.shape
-    loss = tf.reduce_sum(tf.square(human_score - model_score))
-    regularization = matrix_l1_norm(M) + matrix_l1_norm(N)
-    gamma = tf.constant(0.3, name='gamma')
+    # human_score = tf.cast(human_score, tf.float32)
+    # model_score = tf.cast(model_score, tf.float32)
+    hs_shape = human_score.get_shape().as_list()
+    ms_shape = model_score.get_shape().as_list()
+    with tf.control_dependencies(
+        [tf.assert_equal(len(hs_shape), 1, message='score should be 1D.'),
+         tf.assert_equal(len(ms_shape), 1, message='score should be 1D.'),
+         tf.assert_equal(hs_shape, ms_shape,
+                         message='human and model scores should have an equal amount.')]):
+        loss = tf.reduce_sum(tf.square(human_score - model_score))
+        regularization = matrix_l1_norm(M) + matrix_l1_norm(N)
+        gamma = tf.constant(0.3, name='gamma')
     return loss + (gamma * regularization)
