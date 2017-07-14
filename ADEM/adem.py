@@ -2,9 +2,9 @@ import tensorflow as tf
 
 
 def adem_score(context, model_response, reference_response):
-    # context = tf.cast(context, tf.float32)
-    # model_response = tf.cast(model_response, tf.float32)
-    # reference_response = tf.cast(reference_response, tf.float32)
+    context = tf.cast(context, tf.float32)
+    model_response = tf.cast(model_response, tf.float32)
+    reference_response = tf.cast(reference_response, tf.float32)
     rr_size, rr_dim = reference_response.get_shape().as_list()
     mr_size, mr_dim = model_response.get_shape().as_list()
     ct_size, ct_dim = context.get_shape().as_list()
@@ -34,8 +34,8 @@ def matrix_l1_norm(matrix):
 
 
 def adem_l1_loss(human_score, model_score, M, N):
-    # human_score = tf.cast(human_score, tf.float32)
-    # model_score = tf.cast(model_score, tf.float32)
+    human_score = tf.cast(human_score, tf.float32)
+    model_score = tf.cast(model_score, tf.float32)
     hs_shape = human_score.get_shape().as_list()
     ms_shape = model_score.get_shape().as_list()
     with tf.control_dependencies(
