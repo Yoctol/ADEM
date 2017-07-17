@@ -19,9 +19,9 @@ def encoder_on_batch(batch_with_embedding, batch_mask,
         encoder_result = encoder_func(**encoder_params)
         return [idx + 1, tf.concat([output, encoder_result], axis=0)]
 
-    result = tf.while_loop(
+    _, batch_output = tf.while_loop(
         condition_func, body_func,
         loop_vars=[idx, output],
         shape_invariants=[idx.get_shape(), tf.TensorShape([None, output_dim])])
 
-    return tf.slice(result[1], [1, 0], [batch_size, output_dim])
+    return tf.slice(batch_output, [1, 0], [batch_size, output_dim])
