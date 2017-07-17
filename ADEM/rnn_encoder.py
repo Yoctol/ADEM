@@ -17,6 +17,7 @@ def lstm_context_encoder(
         utterence_level_activation=tf.tanh,
         context_level_forget_bias=1.0,
         context_level_activation=tf.tanh,):
+    # context = several utterences (1 or more)
     # two level encoder
     input_shape = input_with_embedding.get_shape().as_list()
 
@@ -41,7 +42,7 @@ def lstm_context_encoder(
         final_utterence_output,
         shape=[1, utt_output_shape[0], utt_output_shape[1]])
 
-    context_mask = np.array([input_shape[0]])
+    context_mask = tf.count_nonzero([mask], axis=1)
 
     context_outputs, context_states = multi_lstms(
         input_with_embedding=context_input,
