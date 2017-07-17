@@ -1,9 +1,9 @@
 import tensorflow as tf
 
-from ADEM.adem import *
+from ADEM.adem_core import *
 
 
-class AdemTest(tf.test.TestCase):
+class AdemCoreTest(tf.test.TestCase):
 
     def test_adem_score(self):
         with self.test_session() as sess:
