@@ -9,7 +9,7 @@ def cast_to_float32(tensor_list):
 
 def get_last_effective_result(input_, mask):
     [input_] = cast_to_float32([input_])
-    input_shape = input_.get_shape().as_list()
+    input_shape = tf.shape(input_, )
     zero_one_embedding = tf.concat([tf.zeros([1, input_shape[2]]),
                                     tf.ones([1, input_shape[2]])], axis=0)
     last_word_idx = tf.one_hot(
