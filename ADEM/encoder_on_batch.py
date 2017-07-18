@@ -4,11 +4,11 @@ from .rnn_encoder import *
 
 
 def encoder_on_batch(batch_with_embedding, batch_mask,
-                     encoder_name, encoder_params):
-
+                     encoder_name, encoder_params, scope_name=None):
     encoder_func = globals()[encoder_name]
-    batch_size = batch_with_embedding.get_shape().as_list()[0]
+    batch_size = tf.shape(batch_with_embedding, )[0]
     output_dim = encoder_params['context_level_state_size']
+    encoder_params['scope_name'] = scope_name
     idx = tf.constant(0)
     output = tf.zeros([1, output_dim], dtype=tf.float32)
     condition_func = lambda idx, output: idx < batch_size

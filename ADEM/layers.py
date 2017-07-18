@@ -11,13 +11,13 @@ def multi_lstms(input_with_embedding, mask,
     def basic_lstm():
         lstm_cell = tf.contrib.rnn.BasicLSTMCell(
             num_units=state_size, forget_bias=forget_bias,
-            activation=activation, state_is_tuple=True)
+            activation=activation, state_is_tuple=True, reuse=None)
         if keep_prob < 1:
             lstm_cell = tf.contrib.rnn.DropoutWrapper(
                 lstm_cell, output_keep_prob=keep_prob)
         return lstm_cell
 
-    with tf.variable_scope(scope_name):
+    with tf.variable_scope(scope_name, reuse=None):
         multi_lstms = tf.contrib.rnn.MultiRNNCell(
             [basic_lstm() for _ in range(num_layers)], state_is_tuple=True)
 
