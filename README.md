@@ -1,9 +1,9 @@
-# ADEM (An Automatic Dialogue Evaluation Model)
-
+# Towards An Automatic Turing Test: Learning to Evaluate Dialogue Responses 
+### A Tensorflow Implementation of ADEM - An Automatic Dialogue Evaluation Model
 ## Basic information about ADEM
 * Authors: Ryan Lowe, Michael Noseworthy, Iulian V. Serban, Nicolas Angelard-Gontier, 
         Yoshua Bengio, Joelle Pineau
-* **ACL** 2017 Accepted Paper
+* [**ACL** 2017 Accepted Paper](https://chairs-blog.acl2017.org/2017/04/05/accepted-papers-and-demonstrations/)
 * Under review as a conference paper at **ICLR** 2017
 * Link: https://openreview.net/pdf?id=HJ5PIaseg
 
