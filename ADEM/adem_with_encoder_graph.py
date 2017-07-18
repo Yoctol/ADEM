@@ -10,14 +10,14 @@ from .adem_loss import compute_adem_l1_loss
 
 def get_vector_representation(tokens, mask, scope_name,
                               vocab_size, embedding_size,
-                              embedding_trainable, init_embedding,
+                              learn_embedding, init_embedding,
                               encoder_name, encoder_params,
                               reuse_embedding=None):
     token_with_embedding = lookup_embedding(
         vocab_size=vocab_size,
         embedding_size=embedding_size,
         input_place=tokens,
-        embedding_trainable=embedding_trainable,
+        learn_embedding=learn_embedding,
         init_embedding=init_embedding,
         reuse_embedding=reuse_embedding)
     output_vectors = encoder_on_batch(
@@ -29,7 +29,7 @@ def get_vector_representation(tokens, mask, scope_name,
     return output_vectors
 
 
-def adem_with_encoder(learning_rate, vocab_size, embedding_size, embedding_trainable,
+def adem_with_encoder(learning_rate, vocab_size, embedding_size, learn_embedding,
                       encoder_name, encoder_params, max_grad_norm,
                       init_embedding=None):
     with tf.name_scope('input_placeholder'):
@@ -60,7 +60,7 @@ def adem_with_encoder(learning_rate, vocab_size, embedding_size, embedding_train
     get_vector_representation_simple = functools.partial(
         get_vector_representation, vocab_size=vocab_size,
         embedding_size=embedding_size,
-        embedding_trainable=embedding_trainable,
+        learn_embedding=learn_embedding,
         init_embedding=init_embedding,
         encoder_name=encoder_name,
         encoder_params=encoder_params)
