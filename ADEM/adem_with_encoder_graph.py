@@ -17,7 +17,7 @@ def get_vector_representation(tokens, mask, scope_name,
         vocab_size=vocab_size,
         embedding_size=embedding_size,
         input_place=tokens,
-        learn_embedding=learn_embedding,
+        embedding_trainable=learn_embedding,
         init_embedding=init_embedding,
         reuse_embedding=reuse_embedding)
     output_vectors = encoder_on_batch(
@@ -29,9 +29,10 @@ def get_vector_representation(tokens, mask, scope_name,
     return output_vectors
 
 
-def adem_with_encoder(learning_rate, vocab_size, embedding_size, learn_embedding,
-                      encoder_name, encoder_params, max_grad_norm,
-                      init_embedding=None):
+def adem_with_encoder_graph(
+        learning_rate, vocab_size, embedding_size, learn_embedding,
+        encoder_name, encoder_params, max_grad_norm,
+        init_embedding=None):
     with tf.name_scope('input_placeholder'):
         context_place = tf.placeholder(
             dtype=tf.int32, shape=[None, None, None], name='context_place')

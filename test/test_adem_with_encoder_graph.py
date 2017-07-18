@@ -1,10 +1,10 @@
 import numpy as np
 import tensorflow as tf
 
-from ADEM.adem_with_encoder import *
+from ADEM.adem_with_encoder_graph import *
 
 
-class AdemWithEncoderTest(tf.test.TestCase):
+class AdemWithEncoderGraphTest(tf.test.TestCase):
 
     def setUp(self):
         self.encoder_name = 'lstm_context_encoder'
@@ -16,17 +16,17 @@ class AdemWithEncoderTest(tf.test.TestCase):
                                'context_level_num_layers': 3}
         self.vocab_size = 10
         self.embedding_size = 30
-        self.embedding_trainable = True
+        self.learn_embedding = True
         self.learning_rate = 0.1
         self.max_grad_norm = 5
 
-    def test_adem_with_encoder(self):
+    def test_adem_with_encoder_graph(self):
         with self.test_session() as sess:
             context_place, model_response_place, reference_response_place, \
                 context_mask_place, model_response_mask_place, reference_response_mask_place,\
                 human_score_place, new_lr_place, train_op, \
-                loss, model_score, lr_update = adem_with_encoder(
-                    self.learning_rate, self.vocab_size, self.embedding_size, self.embedding_trainable,
+                loss, model_score, lr_update = adem_with_encoder_graph(
+                    self.learning_rate, self.vocab_size, self.embedding_size, self.learn_embedding,
                     self.encoder_name, self.encoder_params, self.max_grad_norm)
 
             sess.run(tf.global_variables_initializer())
