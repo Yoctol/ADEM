@@ -1,6 +1,6 @@
 import tensorflow as tf
 
-from ADEM.layers import *
+from ADEM.toolkit.layers import *
 
 
 class LayersTest(tf.test.TestCase):
