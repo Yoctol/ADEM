@@ -17,7 +17,7 @@ def lstm_context_encoder(
         utterence_level_activation=tf.tanh,
         context_level_forget_bias=1.0,
         context_level_activation=tf.tanh,
-        scope_name=None):
+        scope_name=None, **kwargs):
 
     if scope_name is None:
         scope_name = 'lstm_context_encoder'
