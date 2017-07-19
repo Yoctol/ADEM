@@ -1,7 +1,7 @@
 import numpy as np
 import tensorflow as tf
 
-from ADEM.encoder_on_batch import *
+from ADEM.encoder.encoder_on_batch import *
 
 
 class EncoderOnBatchTest(tf.test.TestCase):
