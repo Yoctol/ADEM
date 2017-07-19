@@ -1,7 +1,7 @@
 import tensorflow as tf
 
 from .toolkit.embedding import load_embedding_from_pickle
-from .adem_with_encoder_graph import adem_with_encoder_graph
+from .adem_graphs import adem_with_encoder_graph
 
 
 class ADEMWithEncoder(object):
