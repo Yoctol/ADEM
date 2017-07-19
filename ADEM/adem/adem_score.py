@@ -1,6 +1,6 @@
 import tensorflow as tf
 
-from .tool import cast_to_float32
+from ..toolkit.tool import cast_to_float32
 
 
 def compute_adem_score(context, model_response, reference_response,

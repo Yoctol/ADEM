@@ -1,8 +1,8 @@
 import numpy as np
 import tensorflow as tf
 
-from .layers import *
-from .tool import get_last_effective_result
+from ..toolkit.layers import *
+from ..toolkit.tool import get_last_effective_result
 
 
 def lstm_context_encoder(

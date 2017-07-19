@@ -1,6 +1,6 @@
 import tensorflow as tf
 
-from .tool import cast_to_float32
+from ..toolkit.tool import cast_to_float32
 
 def matrix_l1_norm(matrix):
     matrix = tf.cast(matrix, tf.float32)

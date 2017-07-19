@@ -1,7 +1,7 @@
 import numpy as np
 import tensorflow as tf
 
-from ADEM.tool import *
+from ADEM.toolkit.tool import *
 
 
 class ToolTest(tf.test.TestCase):

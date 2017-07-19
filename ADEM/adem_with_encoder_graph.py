@@ -2,10 +2,10 @@ import functools
 
 import tensorflow as tf
 
-from .encoder_on_batch import encoder_on_batch
-from .embedding import lookup_embedding
-from .adem_score import tf_dynamic_adem_score
-from .adem_loss import compute_adem_l1_loss
+from .encoder.encoder_on_batch import encoder_on_batch
+from .toolkit.embedding import lookup_embedding
+from .adem.adem_score import tf_dynamic_adem_score
+from .adem.adem_loss import compute_adem_l1_loss
 
 
 def get_vector_representation(tokens, mask, scope_name,

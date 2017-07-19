@@ -1,7 +1,7 @@
 import numpy as np
 import tensorflow as tf
 
-from ADEM.rnn_encoder import *
+from ADEM.encoder.rnn_encoder import *
 
 
 class RNNEncoderTest(tf.test.TestCase):
