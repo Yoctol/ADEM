@@ -59,6 +59,6 @@ class EncoderOnBatchTest(tf.test.TestCase):
 
 
     def test_get_encoder(self):
-        with self.assertRaises(ImportError):
+        with self.assertRaises(KeyError):
             input_ = {'name': 'abencoder'}
             get_encoder(input_)
