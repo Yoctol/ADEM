@@ -1,6 +1,6 @@
 import tensorflow as tf
 
-from ADEM.adem_loss import *
+from ADEM.adem.adem_loss import *
 
 
 class AdemLossTest(tf.test.TestCase):

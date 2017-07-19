@@ -1,6 +1,6 @@
 import tensorflow as tf
 
-from ADEM.adem_score import *
+from ADEM.adem.adem_score import *
 
 
 class AdemScoreTest(tf.test.TestCase):
