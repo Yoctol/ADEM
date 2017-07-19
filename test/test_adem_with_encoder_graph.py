@@ -38,6 +38,7 @@ class AdemWithEncoderGraphTest(tf.test.TestCase):
         self.max_grad_norm = 5
 
     def test_adem_with_encoder_graph(self):
+        tf.reset_default_graph()
         with self.test_session() as sess:
             context_place, model_response_place, reference_response_place, \
                 context_mask_place, model_response_mask_place, reference_response_mask_place,\
