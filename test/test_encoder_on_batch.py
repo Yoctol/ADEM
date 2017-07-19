@@ -37,8 +37,7 @@ class EncoderOnBatchTest(tf.test.TestCase):
                                     'utterence_level_num_layers': 2,
                                     'context_level_state_size': 100,
                                     'context_level_keep_proba': 0.9,
-                                    'context_level_num_layers': 3}},
-                output_dim=100)
+                                    'context_level_num_layers': 3}})
 
             sess.run(tf.global_variables_initializer())
             self.assertEqual((2, 100), batch_context_vectors.eval().shape)

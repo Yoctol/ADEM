@@ -11,7 +11,7 @@ from .adem.adem_loss import compute_adem_l1_loss
 def get_vector_representation(tokens, mask, scope_name,
                               vocab_size, embedding_size,
                               learn_embedding, init_embedding,
-                              encoder, output_dim, reuse_embedding=None):
+                              encoder, reuse_embedding=None):
     token_with_embedding = lookup_embedding(
         vocab_size=vocab_size,
         embedding_size=embedding_size,
@@ -23,7 +23,6 @@ def get_vector_representation(tokens, mask, scope_name,
         batch_with_embedding=token_with_embedding,
         batch_mask=mask,
         encoder=encoder,
-        output_dim=output_dim,
         scope_name=scope_name)
     return output_vectors
 
@@ -92,21 +91,16 @@ def adem_with_encoder_graph(
     context_vector = get_vector_representation_simple(
         context_place, context_mask_place,
         encoder=context_encoder,
-        output_dim=context_encoder['params']['context_level_state_size'],
         scope_name='context_encoder')
 
     model_response_vector = get_vector_representation_simple(
         model_response_place, model_response_mask_place,
         encoder=model_response_encoder,
-        output_dim=model_response_encoder[
-            'params']['context_level_state_size'],
         scope_name='model_response_encoder', reuse_embedding=True)
 
     reference_response_vector = get_vector_representation_simple(
         reference_response_place, reference_response_mask_place,
         encoder=reference_response_encoder,
-        output_dim=reference_response_encoder[
-            'params']['context_level_state_size'],
         scope_name='reference_response_encoder', reuse_embedding=True)
 
     train_op, loss, model_score = adem(

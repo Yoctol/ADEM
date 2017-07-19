@@ -23,10 +23,16 @@ def get_encoder(encoder):
 
 
 def encoder_on_batch(batch_with_embedding, batch_mask,
-                     encoder, output_dim, scope_name=None):
+                     encoder, scope_name=None):
     check_encoder_format(encoder)
     encoder_func = get_encoder(encoder)
     batch_size = tf.shape(batch_with_embedding, )[0]
+
+    if 'output_size' not in encoder['params']:
+        output_dim = encoder['params']['context_level_state_size']
+    else:
+        output_dim = encoder['params']['output_size']
+
     idx = tf.constant(0)
     output = tf.zeros([1, output_dim], dtype=tf.float32)
     condition_func = lambda idx, output: idx < batch_size
