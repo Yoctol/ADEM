@@ -11,8 +11,7 @@ from .adem_loss import compute_adem_l1_loss
 def get_vector_representation(tokens, mask, scope_name,
                               vocab_size, embedding_size,
                               learn_embedding, init_embedding,
-                              encoder_name, encoder_params,
-                              reuse_embedding=None):
+                              encoder, output_dim, reuse_embedding=None):
     token_with_embedding = lookup_embedding(
         vocab_size=vocab_size,
         embedding_size=embedding_size,
@@ -23,16 +22,17 @@ def get_vector_representation(tokens, mask, scope_name,
     output_vectors = encoder_on_batch(
         batch_with_embedding=token_with_embedding,
         batch_mask=mask,
-        encoder_name=encoder_name,
-        encoder_params=encoder_params,
+        encoder=encoder,
+        output_dim=output_dim,
         scope_name=scope_name)
     return output_vectors
 
 
 def adem_with_encoder_graph(
         learning_rate, vocab_size, embedding_size, learn_embedding,
-        encoder_name, encoder_params, max_grad_norm,
-        init_embedding=None):
+        context_encoder, model_response_encoder, reference_response_encoder,
+        max_grad_norm, init_embedding=None):
+
     with tf.name_scope('input_placeholder'):
         context_place = tf.placeholder(
             dtype=tf.int32, shape=[None, None, None], name='context_place')
@@ -62,19 +62,26 @@ def adem_with_encoder_graph(
         get_vector_representation, vocab_size=vocab_size,
         embedding_size=embedding_size,
         learn_embedding=learn_embedding,
-        init_embedding=init_embedding,
-        encoder_name=encoder_name,
-        encoder_params=encoder_params)
+        init_embedding=init_embedding)
 
     context_vector = get_vector_representation_simple(
-        context_place, context_mask_place, scope_name='context_encoder')
+        context_place, context_mask_place,
+        encoder=context_encoder,
+        output_dim=context_encoder['params']['context_level_state_size'],
+        scope_name='context_encoder')
 
     model_response_vector = get_vector_representation_simple(
         model_response_place, model_response_mask_place,
+        encoder=model_response_encoder,
+        output_dim=model_response_encoder[
+            'params']['context_level_state_size'],
         scope_name='model_response_encoder', reuse_embedding=True)
 
     reference_response_vector = get_vector_representation_simple(
         reference_response_place, reference_response_mask_place,
+        encoder=reference_response_encoder,
+        output_dim=reference_response_encoder[
+            'params']['context_level_state_size'],
         scope_name='reference_response_encoder', reuse_embedding=True)
 
     model_score, M, N = tf_dynamic_adem_score(
@@ -82,9 +89,9 @@ def adem_with_encoder_graph(
         model_response=model_response_vector,
         reference_response=reference_response_vector,
         shape_info={'batch_size': None,
-                    'ct_dim': encoder_params['context_level_state_size'],
-                    'mr_dim': encoder_params['context_level_state_size'],
-                    'rr_dim': encoder_params['context_level_state_size']})
+                    'ct_dim': context_encoder['params']['context_level_state_size'],
+                    'mr_dim': model_response_encoder['params']['context_level_state_size'],
+                    'rr_dim': reference_response_encoder['params']['context_level_state_size']})
 
     loss = compute_adem_l1_loss(human_score_place, model_score, M, N)
 
