@@ -22,3 +22,18 @@ $$\mathcal{L} = \sum_{i=1:K}[{\text{score}(c_i, r_i, \hat{r_i}) - human\_score_i
     where $\theta = \{M, N\}$$
 
 where \gamma is a scalar constant. The model is end to end differentiable and all parameters can be learned by backpropogation.
+
+
+## Usage
+#### 1. ADEM
+If you have the vector representation of dialogue, model response and reference response already, just feed them into model ADEM.
+Different dimension of vectors are supported.
+```python
+   from ADEM import ADEM
+   model = ADEM(context_dim, model_response_dim, reference_response_dim, learning_rate)
+   model.train_on_single_batch(train_session, context, model_response, reference_response, human_score)
+```
+#### 2. ADEM with encoder
+If you DO NOT have the vector representation of dialogue, model response, reference response, you can input your data which have been mapped from text to word index (or character index) into ADEMWithEncoder. mask....(Since length must be the same in...)
+
+ 
