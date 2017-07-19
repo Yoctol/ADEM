@@ -1,7 +1,7 @@
 import numpy as np
 import tensorflow as tf
 
-from ADEM.adem_with_encoder_graph import *
+from ADEM.adem_graphs import *
 
 
 class AdemWithEncoderGraphTest(tf.test.TestCase):
